@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
 import { __ } from "@wordpress/i18n";
-
+import { useState } from "react";
 /**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
@@ -20,7 +20,13 @@ import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import "./editor.scss";
-import axios from "axios";
+import {
+	BLOCK_TEMPLATE,
+	TEMPLATE,
+	MY_TEMPLATE,
+	GROUP_TEMPLATE,
+} from "./templates/";
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -41,48 +47,14 @@ const STYLES = {
 };
 
 const ALLOWED_BLOCKS = ["core/image"];
-const MY_TEMPLATE = [
-	["core/image", { className: "image-element" }],
-	["core/heading", { placeholder: "Book Title", className: "heading-element" }],
-	[
-		"core/paragraph",
-		{ placeholder: "Summary", className: "paragraph-element" },
-	],
-];
 
-const TEMPLATE = [
-	[
-		"core/columns",
-		{},
-		[
-			["core/column", { allowedBlocks: ["core/image"] }, [["core/image"]]],
-			[
-				"core/column",
-				{ allowedBlocks: ["core/heading", "core/paragraph"] },
-				[
-					[
-						"core/heading",
-						{
-							level: 3,
-							placeholder: "Enter side title...",
-						},
-					],
-					[
-						"core/paragraph",
-						{
-							placeholder: "Enter side content...",
-						},
-					],
-				],
-			],
-		],
-	],
-];
+export default function Edit(props) {
+	const { attributes, setAttributes } = props;
+	const { numberOfRows } = attributes;
 
-export default function Edit() {
 	return (
-		<div className="outer-main" {...useBlockProps({ style: STYLES })}>
-			{/* <InnerBlocks allowedBlocks={ALLOWED_BLOCKS} template={TEMPLATE} /> */}
+		<div className="outer-main" {...useBlockProps()}>
+			{/* <InnerBlocks allowedBlocks={ALLOWED_BLOCKS} template={MY_TEMPLATE} /> */}
 			<InnerBlocks template={TEMPLATE} templateLock="all" />
 		</div>
 	);

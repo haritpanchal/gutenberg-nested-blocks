@@ -18,6 +18,8 @@
 		"@wordpress/scripts": "^23.7.2"
 	},
 	"dependencies": {
+		"@storybook/addon-controls": "^6.5.10",
+		"@wordpress/icons": "^9.7.0",
 		"axios": "^0.27.2"
 	}
 }
